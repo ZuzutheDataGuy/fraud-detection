@@ -1,0 +1,13 @@
+Metadata-Version: 2.4
+Name: fraud-detection
+Version: 0.0.1
+Author: Zuhayr Adams
+Author-email: zuhayradams131026@gmail.com
+Requires-Dist: numpy
+Requires-Dist: pandas
+Requires-Dist: seaborn
+Requires-Dist: matplotlib
+Requires-Dist: scikit-learn
+Dynamic: author
+Dynamic: author-email
+Dynamic: requires-dist
