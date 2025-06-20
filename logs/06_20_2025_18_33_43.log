@@ -1,0 +1,8 @@
+[ 2025-06-20 18:33:45,935 ] 24 root - INFO - Starting the data ingestion process for multiple datasets.
+[ 2025-06-20 18:33:46,113 ] 31 root - INFO - Loan applications dataset loaded successfully.
+[ 2025-06-20 18:33:46,294 ] 33 root - INFO - Transactions dataset loaded successfully.
+[ 2025-06-20 18:33:46,836 ] 38 root - INFO - Raw datasets saved to artifacts directory.
+[ 2025-06-20 18:33:48,451 ] 42 root - INFO - Combined dataset created and saved.
+[ 2025-06-20 18:33:48,515 ] 45 root - INFO - Combined dataset split into training and testing sets.
+[ 2025-06-20 18:33:50,047 ] 49 root - INFO - Training and testing datasets saved to artifacts directory.
+[ 2025-06-20 18:33:50,048 ] 51 root - INFO - Data ingestion process completed successfully.

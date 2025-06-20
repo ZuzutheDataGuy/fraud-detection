@@ -1,0 +1,25 @@
+[ 2025-06-20 19:40:51,188 ] 23 root - INFO - Starting the data ingestion process for multiple datasets.
+[ 2025-06-20 19:40:51,373 ] 30 root - INFO - Loan applications dataset loaded successfully.
+[ 2025-06-20 19:40:51,577 ] 32 root - INFO - Transactions dataset loaded successfully.
+[ 2025-06-20 19:40:52,164 ] 37 root - INFO - Raw datasets saved to artifacts directory.
+[ 2025-06-20 19:40:53,778 ] 41 root - INFO - Combined dataset created and saved.
+[ 2025-06-20 19:40:53,839 ] 44 root - INFO - Combined dataset split into training and testing sets.
+[ 2025-06-20 19:40:55,375 ] 48 root - INFO - Training and testing datasets saved to artifacts directory.
+[ 2025-06-20 19:40:55,385 ] 50 root - INFO - Data ingestion process completed successfully.
+[ 2025-06-20 19:40:56,324 ] 104 root - INFO - Reading train and test data completed
+[ 2025-06-20 19:40:56,325 ] 106 root - INFO - Identifying numerical and categorical features.
+[ 2025-06-20 19:40:56,359 ] 110 root - INFO - Numerical columns: ['loan_amount_requested', 'loan_tenure_months', 'interest_rate_offered', 'monthly_income', 'cibil_score', 'existing_emis_monthly', 'debt_to_income_ratio', 'applicant_age', 'number_of_dependents', 'fraud_flag_x', 'transaction_amount', 'account_balance_after_transaction', 'is_international_transaction']
+[ 2025-06-20 19:40:56,360 ] 111 root - INFO - Categorical columns: ['application_date', 'loan_type', 'purpose_of_loan', 'employment_status', 'property_ownership_status', 'residential_address', 'gender', 'loan_status', 'fraud_type', 'transaction_id', 'transaction_type', 'merchant_category', 'merchant_name', 'transaction_location', 'device_used', 'ip_address', 'transaction_status', 'transaction_source_destination']
+[ 2025-06-20 19:40:56,360 ] 67 root - INFO - Performing outlier treatment on numerical features.
+[ 2025-06-20 19:40:56,422 ] 67 root - INFO - Performing outlier treatment on numerical features.
+[ 2025-06-20 19:40:56,447 ] 75 root - INFO - Adding aggregated transaction features.
+[ 2025-06-20 19:40:56,550 ] 75 root - INFO - Adding aggregated transaction features.
+[ 2025-06-20 19:40:56,575 ] 94 root - INFO - Performing feature engineering for transactions.
+[ 2025-06-20 19:40:56,579 ] 94 root - INFO - Performing feature engineering for transactions.
+[ 2025-06-20 19:40:56,580 ] 125 root - INFO - Feature engineering and aggregation completed.
+[ 2025-06-20 19:40:56,616 ] 135 root - INFO - Creating preprocessing object.
+[ 2025-06-20 19:40:56,617 ] 35 root - INFO - Creating preprocessing pipelines for numerical and categorical features.
+[ 2025-06-20 19:40:56,617 ] 61 root - INFO - Preprocessing pipelines created successfully.
+[ 2025-06-20 19:40:56,617 ] 138 root - INFO - Applying preprocessing object on train and test data.
+[ 2025-06-20 19:40:58,647 ] 142 root - INFO - Shape of input_feature_train_arr after transformation: (103587, 179646)
+[ 2025-06-20 19:40:58,648 ] 143 root - INFO - Shape of input_feature_test_arr after transformation: (25897, 179646)

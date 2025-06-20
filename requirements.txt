@@ -3,4 +3,9 @@ pandas
 seaborn
 matplotlib
 scikit-learn
--e .
+lightgbm
+imbalanced-learn
+xgboost
+catboost
+dill
+#-e .

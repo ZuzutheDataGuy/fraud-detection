@@ -1,0 +1,21 @@
+[ 2025-06-20 19:09:13,870 ] 24 root - INFO - Starting the data ingestion process for multiple datasets.
+[ 2025-06-20 19:09:14,053 ] 31 root - INFO - Loan applications dataset loaded successfully.
+[ 2025-06-20 19:09:14,232 ] 33 root - INFO - Transactions dataset loaded successfully.
+[ 2025-06-20 19:09:14,753 ] 38 root - INFO - Raw datasets saved to artifacts directory.
+[ 2025-06-20 19:09:16,363 ] 42 root - INFO - Combined dataset created and saved.
+[ 2025-06-20 19:09:16,434 ] 45 root - INFO - Combined dataset split into training and testing sets.
+[ 2025-06-20 19:09:17,959 ] 49 root - INFO - Training and testing datasets saved to artifacts directory.
+[ 2025-06-20 19:09:17,960 ] 51 root - INFO - Data ingestion process completed successfully.
+[ 2025-06-20 19:09:18,001 ] 69 root - INFO - Reading train data from artifacts\train.csv and test data from artifacts\test.csv.
+[ 2025-06-20 19:09:18,963 ] 81 root - INFO - Identifying numerical and categorical features.
+[ 2025-06-20 19:09:18,985 ] 93 root - INFO - Numerical columns: ['loan_amount_requested', 'loan_tenure_months', 'interest_rate_offered', 'monthly_income', 'cibil_score', 'existing_emis_monthly', 'debt_to_income_ratio', 'applicant_age', 'number_of_dependents', 'transaction_amount', 'account_balance_after_transaction', 'is_international_transaction', 'fraud_flag_y']
+[ 2025-06-20 19:09:18,986 ] 94 root - INFO - Categorical columns: ['loan_type', 'purpose_of_loan', 'employment_status', 'property_ownership_status', 'residential_address', 'gender', 'loan_status', 'fraud_type', 'transaction_type', 'merchant_category', 'merchant_name', 'transaction_location', 'device_used', 'ip_address', 'transaction_status', 'transaction_source_destination']
+[ 2025-06-20 19:09:18,987 ] 97 root - INFO - Performing outlier treatment on numerical features.
+[ 2025-06-20 19:09:19,052 ] 105 root - INFO - Performing feature engineering for transactions.
+[ 2025-06-20 19:11:27,273 ] 134 root - INFO - Feature engineering completed.
+[ 2025-06-20 19:11:27,274 ] 137 root - INFO - Creating preprocessing object.
+[ 2025-06-20 19:11:27,275 ] 30 root - INFO - Creating preprocessing pipelines for numerical and categorical features.
+[ 2025-06-20 19:11:27,275 ] 57 root - INFO - Preprocessing pipelines created successfully.
+[ 2025-06-20 19:11:27,349 ] 147 root - INFO - Checking shapes before preprocessing.
+[ 2025-06-20 19:11:27,349 ] 148 root - INFO - Shape of input_feature_train_df: (103587, 51)
+[ 2025-06-20 19:11:27,350 ] 149 root - INFO - Shape of target_feature_train_df: (103587,)

@@ -1,0 +1,13 @@
+[ 2025-06-20 18:37:52,577 ] 24 root - INFO - Starting the data ingestion process for multiple datasets.
+[ 2025-06-20 18:37:52,775 ] 31 root - INFO - Loan applications dataset loaded successfully.
+[ 2025-06-20 18:37:52,963 ] 33 root - INFO - Transactions dataset loaded successfully.
+[ 2025-06-20 18:37:53,538 ] 38 root - INFO - Raw datasets saved to artifacts directory.
+[ 2025-06-20 18:37:55,194 ] 42 root - INFO - Combined dataset created and saved.
+[ 2025-06-20 18:37:55,259 ] 45 root - INFO - Combined dataset split into training and testing sets.
+[ 2025-06-20 18:37:56,792 ] 49 root - INFO - Training and testing datasets saved to artifacts directory.
+[ 2025-06-20 18:37:56,792 ] 51 root - INFO - Data ingestion process completed successfully.
+[ 2025-06-20 18:37:56,835 ] 112 root - INFO - Reading train data from artifacts\train.csv and test data from artifacts\test.csv.
+[ 2025-06-20 18:37:57,788 ] 116 root - INFO - Identifying numerical and categorical features.
+[ 2025-06-20 18:37:57,818 ] 129 root - INFO - Numerical columns: ['loan_amount_requested', 'loan_tenure_months', 'interest_rate_offered', 'monthly_income', 'cibil_score', 'existing_emis_monthly', 'debt_to_income_ratio', 'applicant_age', 'number_of_dependents', 'fraud_flag_x', 'transaction_amount', 'account_balance_after_transaction', 'is_international_transaction', 'fraud_flag_y']
+[ 2025-06-20 18:37:57,819 ] 130 root - INFO - Categorical columns: ['loan_type', 'purpose_of_loan', 'employment_status', 'property_ownership_status', 'residential_address', 'gender', 'loan_status', 'fraud_type', 'transaction_id', 'transaction_type', 'merchant_category', 'merchant_name', 'transaction_location', 'device_used', 'ip_address', 'transaction_status', 'transaction_source_destination', 'transaction_notes']
+[ 2025-06-20 18:37:57,819 ] 133 root - INFO - Creating preprocessing object.
