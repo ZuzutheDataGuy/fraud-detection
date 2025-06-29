@@ -1,0 +1,11 @@
+[ 2025-06-23 19:17:26,465 ] 42 root - INFO - Loan applications dataset loaded successfully.
+[ 2025-06-23 19:17:26,649 ] 44 root - INFO - Transactions dataset loaded successfully.
+[ 2025-06-23 19:17:27,228 ] 50 root - INFO - Data ingestion process completed successfully.
+[ 2025-06-23 19:17:27,237 ] 60 root - INFO - Starting data transformation process.
+[ 2025-06-23 19:17:27,237 ] 142 root - INFO - Reading data from artifacts\loan_applications.csv, artifacts\transactions.csv.
+[ 2025-06-23 19:17:27,631 ] 28 root - INFO - Starting feature engineering process.
+[ 2025-06-23 19:19:25,793 ] 107 root - INFO - Feature engineering process completed.
+[ 2025-06-23 19:19:25,891 ] 165 root - INFO - Performing train-test split.
+[ 2025-06-23 19:19:25,917 ] 115 root - INFO - Creating preprocessing pipelines for numerical and categorical features.
+[ 2025-06-23 19:19:25,918 ] 134 root - INFO - Preprocessing pipelines created successfully.
+[ 2025-06-23 19:19:25,918 ] 171 root - INFO - Applying preprocessing object on train and test data.

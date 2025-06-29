@@ -1,0 +1,29 @@
+[ 2025-06-26 20:32:19,163 ] 59 root - INFO - Starting data ingestion process.
+[ 2025-06-26 20:32:19,343 ] 43 root - INFO - Loan applications dataset loaded successfully.
+[ 2025-06-26 20:32:19,525 ] 45 root - INFO - Transactions dataset loaded successfully.
+[ 2025-06-26 20:32:20,199 ] 51 root - INFO - Data ingestion process completed successfully.
+[ 2025-06-26 20:32:20,208 ] 63 root - INFO - Starting data transformation process.
+[ 2025-06-26 20:32:20,208 ] 177 root - INFO - Starting data transformation process
+[ 2025-06-26 20:32:20,208 ] 122 root - INFO - Loading datasets for transformation
+[ 2025-06-26 20:32:20,606 ] 128 root - INFO - Merging datasets
+[ 2025-06-26 20:32:20,730 ] 135 root - INFO - Datasets merged successfully
+[ 2025-06-26 20:32:20,730 ] 29 root - INFO - Creating datetime features
+[ 2025-06-26 20:32:20,757 ] 36 root - INFO - Datetime features created successfully
+[ 2025-06-26 20:32:20,757 ] 44 root - INFO - Creating loan-related features
+[ 2025-06-26 20:32:20,759 ] 49 root - INFO - Loan features created successfully
+[ 2025-06-26 20:32:20,760 ] 57 root - INFO - Starting transaction feature aggregation
+[ 2025-06-26 20:34:01,156 ] 89 root - INFO - Transaction feature aggregation completed successfully
+[ 2025-06-26 20:34:01,226 ] 97 root - INFO - Starting fraud feature aggregation
+[ 2025-06-26 20:34:44,420 ] 114 root - INFO - Fraud feature aggregation completed successfully
+[ 2025-06-26 20:34:44,438 ] 197 root - INFO - Merging aggregated features
+[ 2025-06-26 20:34:44,514 ] 208 root - INFO - Preparing features and target variable
+[ 2025-06-26 20:34:44,541 ] 143 root - INFO - Creating data transformer object
+[ 2025-06-26 20:34:44,556 ] 148 root - INFO - Numerical features: ['loan_amount_requested', 'loan_tenure_months', 'interest_rate_offered', 'monthly_income', 'cibil_score', 'existing_emis_monthly', 'debt_to_income_ratio', 'applicant_age', 'number_of_dependents', 'loan_affordability_ratio', 'existing_emi_to_income_ratio', 'num_transactions_30d', 'total_transaction_amount_30d', 'average_transaction_amount_30d', 'unique_merchant_categories_30d', 'num_transactions_90d', 'total_transaction_amount_90d', 'average_transaction_amount_90d', 'unique_merchant_categories_90d', 'num_transactions_180d', 'total_transaction_amount_180d', 'average_transaction_amount_180d', 'unique_merchant_categories_180d', 'num_transactions_365d', 'total_transaction_amount_365d', 'average_transaction_amount_365d', 'unique_merchant_categories_365d', 'failed_transactions_count', 'international_transactions_count']
+[ 2025-06-26 20:34:44,556 ] 149 root - INFO - Categorical features: ['loan_type', 'purpose_of_loan', 'employment_status', 'property_ownership_status', 'residential_address', 'gender']
+[ 2025-06-26 20:34:44,556 ] 158 root - INFO - Data transformer object created successfully
+[ 2025-06-26 20:34:44,557 ] 222 root - INFO - Applying transformations
+[ 2025-06-26 20:34:44,966 ] 229 root - INFO - Shape of transformed data: (50000, 18372)
+[ 2025-06-26 20:34:44,966 ] 230 root - INFO - Shape of target variable: (50000,)
+[ 2025-06-26 20:34:44,966 ] 233 root - INFO - Saving preprocessing object
+[ 2025-06-26 20:34:44,979 ] 249 root - INFO - Creating transformed dataset
+[ 2025-06-26 20:34:44,985 ] 258 root - INFO - Final transformed data shape: (50000, 18373)

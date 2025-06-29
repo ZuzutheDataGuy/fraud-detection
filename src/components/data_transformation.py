@@ -1,166 +1,277 @@
+import os
 import sys
-import numpy as np
 import pandas as pd
+import numpy as np
+from datetime import timedelta
+from dataclasses import dataclass
+from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from sklearn.compose import ColumnTransformer
-from sklearn.impute import SimpleImputer
-from sklearn.pipeline import Pipeline
-from sklearn.preprocessing import OneHotEncoder, StandardScaler
 from src.exception import CustomException
 from src.logger import logging
-from src.utils import save_object
-import os
+import pickle
 
+
+@dataclass
 class DataTransformationConfig:
-    preprocessor_obj_file_path = os.path.join('artifacts', "preprocessor.pkl")
+    preprocessor_obj_file_path: str = os.path.join("artifacts", "preprocessor.pkl")
+    transformed_train_data_path: str = os.path.join("artifacts", "transformed_data.csv")
+    feature_names_path: str = os.path.join("artifacts", "feature_names.pkl")
 
 
 class DataTransformation:
     def __init__(self):
         self.data_transformation_config = DataTransformationConfig()
+        self.epsilon = 1e-6
 
-    def get_numerical_features(self, df):
-        # Identify numerical features
-        numerical_features = df.select_dtypes(include=[np.number]).columns.tolist()
-        irrelevant_columns = ['application_id', 'customer_id', 'transaction_date', 'transaction_notes', 'fraud_flag_y']
-        return [col for col in numerical_features if col not in irrelevant_columns]
-
-    def get_categorical_features(self, df):
-        # Identify categorical features
-        categorical_features = df.select_dtypes(include=['object']).columns.tolist()
-        irrelevant_columns = ['application_id', 'customer_id', 'transaction_date', 'transaction_notes']
-        return [col for col in categorical_features if col not in irrelevant_columns]
-
-    def get_data_transformer_object(self, numerical_columns, categorical_columns):
+    def create_datetime_features(self, df):
         try:
-            logging.info("Creating preprocessing pipelines for numerical and categorical features.")
+            logging.info("Creating datetime features")
+            df['application_date'] = pd.to_datetime(df['application_date'])
+            df['application_year'] = df['application_date'].dt.year
+            df['application_month'] = df['application_date'].dt.month
+            df['application_day_of_week'] = df['application_date'].dt.dayofweek
+            df['application_hour'] = df['application_date'].dt.hour
+            df['is_weekend'] = df['application_date'].dt.weekday > 4
+            logging.info("Datetime features created successfully")
+            return df
+        except Exception as e:
+            raise CustomException(e, sys)
 
-            # Numerical pipeline
-            num_pipeline = Pipeline(
-                steps=[
-                    ("imputer", SimpleImputer(strategy="median")),
-                    ("scaler", StandardScaler())
-                ]
-            )
+    def create_loan_features(self, df):
+        try:
+            logging.info("Creating loan-related features")
+            df['loan_affordability_ratio'] = df['loan_amount_requested'] / (df['monthly_income'] + self.epsilon)
+            df['existing_emi_to_income_ratio'] = (
+                df['existing_emis_monthly'] / (df['monthly_income'] + self.epsilon)
+            ) * 100
+            logging.info("Loan features created successfully")
+            return df
+        except Exception as e:
+            raise CustomException(e, sys)
 
-            # Categorical pipeline
-            cat_pipeline = Pipeline(
-                steps=[
-                    ("imputer", SimpleImputer(strategy="most_frequent")),
-                    ("one_hot_encoder", OneHotEncoder(handle_unknown='ignore')),
-                    ("scaler", StandardScaler(with_mean=False))
-                ]
+    def aggregate_transaction_features(self, merged_df):
+        try:
+            logging.info("Starting transaction feature aggregation")
+            time_windows = [30, 90, 180, 365]
+            aggregated_transaction_features = []
+
+            merged_df['transaction_date'] = pd.to_datetime(merged_df['transaction_date'])
+            merged_df = merged_df.sort_values(by=['customer_id', 'transaction_date'])
+
+            for customer_id, customer_group in merged_df.groupby('customer_id'):
+                for _, loan_row in customer_group.drop_duplicates(subset='application_id').iterrows():
+                    application_date = loan_row['application_date']
+                    application_id = loan_row['application_id']
+
+                    transactions_before_application = customer_group[
+                        customer_group['transaction_date'] < application_date
+                    ].copy()
+
+                    app_features = {'application_id': application_id}
+
+                    for window_days in time_windows:
+                        window_start_date = application_date - timedelta(days=window_days)
+                        transactions_in_window = transactions_before_application[
+                            transactions_before_application['transaction_date'] >= window_start_date
+                        ]
+
+                        app_features[f'num_transactions_{window_days}d'] = transactions_in_window.shape[0]
+                        app_features[f'total_transaction_amount_{window_days}d'] = transactions_in_window['transaction_amount'].sum()
+                        app_features[f'average_transaction_amount_{window_days}d'] = transactions_in_window['transaction_amount'].mean() if transactions_in_window.shape[0] > 0 else 0
+                        app_features[f'unique_merchant_categories_{window_days}d'] = transactions_in_window['merchant_category'].nunique()
+
+                    aggregated_transaction_features.append(app_features)
+
+            transaction_aggregation_df = pd.DataFrame(aggregated_transaction_features)
+            logging.info("Transaction feature aggregation completed successfully")
+            return transaction_aggregation_df
+        except Exception as e:
+            raise CustomException(e, sys)
+
+    def aggregate_fraud_features(self, merged_df):
+        try:
+            logging.info("Starting fraud feature aggregation")
+            aggregated_fraud_features = []
+
+            for customer_id, group in merged_df.groupby('customer_id'):
+                for _, loan_row in group.drop_duplicates(subset='application_id').iterrows():
+                    application_date = loan_row['application_date']
+                    prior_transactions = group[group['transaction_date'] < application_date]
+
+                    fraud_metrics = {
+                        'application_id': loan_row['application_id'],
+                        'failed_transactions_count': (prior_transactions['transaction_status'] == 'Failed').sum(),
+                        'international_transactions_count': prior_transactions['is_international_transaction'].sum(),
+                    }
+
+                    aggregated_fraud_features.append(fraud_metrics)
+
+            fraud_features_df = pd.DataFrame(aggregated_fraud_features)
+            logging.info("Fraud feature aggregation completed successfully")
+            return fraud_features_df
+        except Exception as e:
+            raise CustomException(e, sys)
+
+    def merge_datasets(self, loan_applications_path, transactions_path):
+        try:
+            logging.info("Loading datasets for transformation")
+            loan_applications_df = pd.read_csv(loan_applications_path)
+            loan_applications_df['application_date'] = pd.to_datetime(loan_applications_df['application_date'])
+            transactions_df = pd.read_csv(transactions_path)
+            transactions_df['transaction_date'] = pd.to_datetime(transactions_df['transaction_date'])
+
+            logging.info("Merging datasets")
+            merged_df = pd.merge(
+                loan_applications_df,
+                transactions_df,
+                on='customer_id',
+                how='left'
             )
+            logging.info("Datasets merged successfully")
+            return loan_applications_df, transactions_df, merged_df
+        except Exception as e:
+            raise CustomException(e, sys)
+
+    def get_data_transformer_object(self, X):
+        try:
+            logging.info("Creating data transformer object")
+            
+            numerical_features = X.select_dtypes(include=['int64', 'float64']).columns.tolist()
+            categorical_features = X.select_dtypes(include=['object', 'category']).columns.tolist()
+            
+            if 'residential_address' in categorical_features:
+                categorical_features.remove('residential_address')
+                logging.info("Removed 'residential_address' from categorical features")
+
+            logging.info(f"Numerical features: {numerical_features}")
+            logging.info(f"Categorical features: {categorical_features}")
 
             preprocessor = ColumnTransformer(
                 transformers=[
-                    ("num_pipeline", num_pipeline, numerical_columns),
-                    ("cat_pipeline", cat_pipeline, categorical_columns)
-                ]
+                    ('num', StandardScaler(), numerical_features),
+                    ('cat', OneHotEncoder(handle_unknown='ignore'), categorical_features)
+                ], remainder='drop'
             )
 
-            logging.info("Preprocessing pipelines created successfully.")
+            logging.info("Data transformer object created successfully")
             return preprocessor
         except Exception as e:
             raise CustomException(e, sys)
 
-    def perform_outlier_treatment(self, df, numerical_columns):
-        logging.info("Performing outlier treatment on numerical features.")
-        for col in numerical_columns:
-            lower_bound = df[col].quantile(0.01)
-            upper_bound = df[col].quantile(0.99)
-            df[col] = np.clip(df[col], lower_bound, upper_bound)
-        return df
-
-    def add_aggregated_transaction_features(self, df):
-        logging.info("Adding aggregated transaction features.")
-        aggregated = df.groupby('customer_id').agg({
-            'transaction_amount': ['sum', 'mean', 'max', 'min'],
-            'fraud_flag_y': ['sum']
-        }).reset_index()
-
-        aggregated.columns = [
-            'customer_id', 
-            'total_transaction_amount', 
-            'avg_transaction_amount', 
-            'max_transaction_amount', 
-            'min_transaction_amount', 
-            'total_fraud_transactions'
-        ]
-
-        df = pd.merge(df, aggregated, on='customer_id', how='left')
-        return df
-
-    def perform_feature_engineering(self, df):
-        logging.info("Performing feature engineering for transactions.")
-        df['transaction_speed'] = df['transaction_amount'] / (df['account_balance_after_transaction'] + 1e-6)
-        df['income_to_loan_ratio'] = df['monthly_income'] / (df['loan_amount_requested'] + 1e-6)
-        return df
-
-    def initiate_data_transformation(self, train_path, test_path):
+    def save_object(self, file_path, obj):
         try:
-            train_df = pd.read_csv(train_path)
-            test_df = pd.read_csv(test_path)
+            dir_path = os.path.dirname(file_path)
+            os.makedirs(dir_path, exist_ok=True)
+            
+            with open(file_path, "wb") as file_obj:
+                pickle.dump(obj, file_obj)
+        except Exception as e:
+            raise CustomException(e, sys)
 
-            logging.info("Reading train and test data completed")
+    def initiate_data_transformation(self, loan_applications_path, transactions_path):
+        try:
+            logging.info("Starting data transformation process")
 
-            logging.info("Identifying numerical and categorical features.")
-            numerical_columns = self.get_numerical_features(train_df)
-            categorical_columns = self.get_categorical_features(train_df)
+            loan_applications_df, transactions_df, merged_df = self.merge_datasets(
+                loan_applications_path, transactions_path
+            )
 
-            logging.info(f"Numerical columns: {numerical_columns}")
-            logging.info(f"Categorical columns: {categorical_columns}")
+            loan_applications_df = self.create_datetime_features(loan_applications_df)
 
-            # Perform outlier treatment
-            train_df = self.perform_outlier_treatment(train_df, numerical_columns)
-            test_df = self.perform_outlier_treatment(test_df, numerical_columns)
+            loan_applications_df = self.create_loan_features(loan_applications_df)
 
-            # Add aggregated transaction features
-            train_df = self.add_aggregated_transaction_features(train_df)
-            test_df = self.add_aggregated_transaction_features(test_df)
+            transaction_aggregation_df = self.aggregate_transaction_features(merged_df)
 
-            # Perform feature engineering
-            train_df = self.perform_feature_engineering(train_df)
-            test_df = self.perform_feature_engineering(test_df)
+            fraud_features_df = self.aggregate_fraud_features(merged_df)
 
-            logging.info("Feature engineering and aggregation completed.")
+            logging.info("Merging aggregated features")
+            loan_applications_df = pd.merge(
+                loan_applications_df, transaction_aggregation_df, 
+                on='application_id', how='left'
+            )
+            loan_applications_df = pd.merge(
+                loan_applications_df, fraud_features_df, 
+                on='application_id', how='left'
+            )
 
-            # Drop target column to create feature sets
-            target_column_name = "fraud_flag_y"
-            input_feature_train_df = train_df.drop(columns=[target_column_name], axis=1)
-            target_feature_train_df = train_df[target_column_name]
+            logging.info("Preparing features and target variable")
+            y = loan_applications_df['fraud_flag']
+            X = loan_applications_df.drop(columns=[
+                'fraud_flag', 'fraud_type', 'loan_status', 
+                'application_id', 'customer_id', 'application_date'
+            ])
 
-            input_feature_test_df = test_df.drop(columns=[target_column_name], axis=1)
-            target_feature_test_df = test_df[target_column_name]
+            X = X.fillna(0)
 
-            logging.info("Creating preprocessing object.")
-            preprocessing_obj = self.get_data_transformer_object(numerical_columns, categorical_columns)
+            preprocessing_obj = self.get_data_transformer_object(X)
 
-            logging.info("Applying preprocessing object on train and test data.")
-            input_feature_train_arr = preprocessing_obj.fit_transform(input_feature_train_df)
-            input_feature_test_arr = preprocessing_obj.transform(input_feature_test_df)
+            logging.info("Applying transformations")
+            X_transformed = preprocessing_obj.fit_transform(X)
 
-            logging.info(f"Shape of input_feature_train_arr after transformation: {input_feature_train_arr.shape}")
-            logging.info(f"Shape of input_feature_test_arr after transformation: {input_feature_test_arr.shape}")
+            if hasattr(X_transformed, 'toarray'):
+                X_transformed = X_transformed.toarray()
 
-            # Ensure target variable is reshaped correctly
-            target_feature_train_arr = np.array(target_feature_train_df).reshape(-1, 1)
-            target_feature_test_arr = np.array(target_feature_test_df).reshape(-1, 1)
+            logging.info(f"Shape of transformed data: {X_transformed.shape}")
+            logging.info(f"Shape of target variable: {y.shape}")
 
-            # Concatenate features and target
-            train_arr = np.hstack([input_feature_train_arr, target_feature_train_arr])
-            test_arr = np.hstack([input_feature_test_arr, target_feature_test_arr])
-
-            logging.info("Preprocessing completed, saving preprocessing object.")
-
-            save_object(
+            logging.info("Saving preprocessing object")
+            self.save_object(
                 file_path=self.data_transformation_config.preprocessor_obj_file_path,
                 obj=preprocessing_obj
             )
 
-            return train_arr, test_arr, self.data_transformation_config.preprocessor_obj_file_path
+            try:
+                feature_names = preprocessing_obj.get_feature_names_out()
+                logging.info("Successfully retrieved feature names from preprocessor")
+            except Exception as e:
+                logging.warning(f"Could not get feature names from preprocessor: {e}")
+                numerical_features = X.select_dtypes(include=['int64', 'float64']).columns.tolist()
+                categorical_features = X.select_dtypes(include=['object', 'category']).columns.tolist()
+                
+                if 'residential_address' in categorical_features:
+                    categorical_features.remove('residential_address')
+                
+                feature_names = []
+                feature_names.extend([f"num__{name}" for name in numerical_features])
+                
+                try:
+                    cat_transformer = preprocessing_obj.named_transformers_['cat']
+                    for i, feature in enumerate(categorical_features):
+                        categories = cat_transformer.categories_[i]
+                        feature_names.extend([f"cat__{feature}__{cat}" for cat in categories])
+                except:
+                    feature_names = [f"feature_{i}" for i in range(X_transformed.shape[1])]
+                    
+            logging.info(f"Number of feature names: {len(feature_names)}")
+            logging.info(f"First 10 feature names: {feature_names[:10]}")
+            
+            self.save_object(
+                file_path=self.data_transformation_config.feature_names_path,
+                obj=feature_names
+            )
+
+            logging.info("Creating transformed dataset")
+            
+            target_array = np.array(y).flatten()
+            
+            transformed_data = pd.DataFrame(X_transformed, columns=feature_names)
+            transformed_data['target'] = target_array
+            
+            logging.info(f"Final transformed data shape: {transformed_data.shape}")
+            
+            transformed_data.to_csv(
+                self.data_transformation_config.transformed_train_data_path, 
+                index=False
+            )
+
+            logging.info("Data transformation completed successfully")
+
+            return (
+                X_transformed,
+                target_array,
+                self.data_transformation_config.preprocessor_obj_file_path
+            )
+
         except Exception as e:
+            logging.error("An error occurred during data transformation")
             raise CustomException(e, sys)
-
-
-
-    

@@ -1,0 +1,9 @@
+[ 2025-06-22 19:20:54,000 ] 48 root - INFO - Starting the data ingestion process for multiple datasets.
+[ 2025-06-22 19:20:54,227 ] 56 root - INFO - Loan applications dataset loaded successfully.
+[ 2025-06-22 19:20:54,430 ] 58 root - INFO - Transactions dataset loaded successfully.
+[ 2025-06-22 19:20:54,439 ] 22 root - INFO - Performing outlier treatment on numerical features.
+[ 2025-06-22 19:20:54,483 ] 22 root - INFO - Performing outlier treatment on numerical features.
+[ 2025-06-22 19:20:54,492 ] 36 root - INFO - Saving raw datasets to artifacts directory.
+[ 2025-06-22 19:20:55,017 ] 70 root - INFO - Data ingestion process completed successfully.
+[ 2025-06-22 19:20:55,026 ] 80 root - INFO - Loan data saved at: artifacts\loan_applications.csv
+[ 2025-06-22 19:20:55,026 ] 81 root - INFO - Transactions data saved at: artifacts\transactions.csv

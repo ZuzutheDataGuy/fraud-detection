@@ -1,0 +1,9 @@
+[ 2025-06-23 20:33:22,602 ] 68 root - INFO - Starting data ingestion process.
+[ 2025-06-23 20:33:22,766 ] 43 root - INFO - Loan applications dataset loaded successfully.
+[ 2025-06-23 20:33:22,935 ] 45 root - INFO - Transactions dataset loaded successfully.
+[ 2025-06-23 20:33:23,471 ] 51 root - INFO - Data ingestion process completed successfully.
+[ 2025-06-23 20:33:23,480 ] 73 root - INFO - Starting data transformation process.
+[ 2025-06-23 20:33:23,878 ] 141 root - INFO - Loan and transactions datasets loaded successfully.
+[ 2025-06-23 20:35:52,186 ] 54 root - INFO - Preprocessor object created with numerical: ['loan_amount_requested', 'loan_tenure_months', 'interest_rate_offered', 'monthly_income', 'cibil_score', 'existing_emis_monthly', 'debt_to_income_ratio', 'applicant_age', 'number_of_dependents', 'loan_affordability_ratio', 'existing_emi_to_income_ratio', 'num_transactions_30d', 'total_transaction_amount_30d', 'unique_merchants_30d', 'num_transactions_90d', 'total_transaction_amount_90d', 'unique_merchants_90d', 'num_transactions_180d', 'total_transaction_amount_180d', 'unique_merchants_180d', 'num_transactions_365d', 'total_transaction_amount_365d', 'unique_merchants_365d', 'failed_transactions_count', 'international_transactions_count'] and categorical: ['application_id', 'customer_id', 'loan_type', 'purpose_of_loan', 'employment_status', 'property_ownership_status', 'residential_address', 'gender', 'loan_status', 'fraud_type']
+[ 2025-06-23 20:36:01,641 ] 14 root - INFO - Object saved at artifacts\preprocessor.pkl
+[ 2025-06-23 20:36:01,641 ] 187 root - INFO - Processed training and testing data saved to artifacts\train_processed.csv and artifacts\test_processed.csv.

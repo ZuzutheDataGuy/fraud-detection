@@ -1,0 +1,5 @@
+[ 2025-06-22 20:22:55,252 ] 42 root - INFO - Loan applications dataset loaded successfully.
+[ 2025-06-22 20:22:55,440 ] 44 root - INFO - Transactions dataset loaded successfully.
+[ 2025-06-22 20:22:56,008 ] 50 root - INFO - Data ingestion process completed successfully.
+[ 2025-06-22 20:22:56,017 ] 60 root - INFO - Starting data transformation process.
+[ 2025-06-22 20:22:56,017 ] 125 root - INFO - Reading data from artifacts\loan_applications.csv, artifacts\transactions.csv.

@@ -1,0 +1,4 @@
+[ 2025-06-23 19:24:22,184 ] 42 root - INFO - Loan applications dataset loaded successfully.
+[ 2025-06-23 19:24:22,370 ] 44 root - INFO - Transactions dataset loaded successfully.
+[ 2025-06-23 19:24:22,934 ] 50 root - INFO - Data ingestion process completed successfully.
+[ 2025-06-23 19:24:22,944 ] 60 root - INFO - Starting data transformation process.

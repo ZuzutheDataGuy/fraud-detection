@@ -1,0 +1,11 @@
+[ 2025-06-26 19:30:42,300 ] 65 root - INFO - Starting data ingestion process.
+[ 2025-06-26 19:30:42,470 ] 43 root - INFO - Loan applications dataset loaded successfully.
+[ 2025-06-26 19:30:42,638 ] 45 root - INFO - Transactions dataset loaded successfully.
+[ 2025-06-26 19:30:43,170 ] 51 root - INFO - Data ingestion process completed successfully.
+[ 2025-06-26 19:30:43,178 ] 69 root - INFO - Starting data transformation process.
+[ 2025-06-26 19:30:43,574 ] 156 root - INFO - Loan and transactions datasets loaded successfully.
+[ 2025-06-26 19:33:21,064 ] 18 root - INFO - Object saved at artifacts\preprocessor.pkl
+[ 2025-06-26 19:33:21,064 ] 204 root - INFO - Processed data saved successfully at artifacts\train_processed.csv and artifacts\test_processed.csv.
+[ 2025-06-26 19:33:21,085 ] 74 root - INFO - Starting model training process.
+[ 2025-06-26 19:33:21,086 ] 51 root - INFO - Loading processed training and testing data.
+[ 2025-06-26 19:33:21,108 ] 81 root - ERROR - Error occurred during testing: Error occurred in python script: [C:\Users\Zuhayr Adams\Projects\Fraud Detection\src\components\model_trainer.py] at line number: [52] error message: [Error occurred in python script: [C:\Users\Zuhayr Adams\Projects\Fraud Detection\src\components\model_trainer.py] at line number: [43] error message: [Error loading processed data: artifacts\train_processed.csv]]

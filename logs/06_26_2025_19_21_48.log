@@ -1,0 +1,12 @@
+[ 2025-06-26 19:21:50,620 ] 65 root - INFO - Starting data ingestion process.
+[ 2025-06-26 19:21:50,788 ] 43 root - INFO - Loan applications dataset loaded successfully.
+[ 2025-06-26 19:21:50,964 ] 45 root - INFO - Transactions dataset loaded successfully.
+[ 2025-06-26 19:21:51,515 ] 51 root - INFO - Data ingestion process completed successfully.
+[ 2025-06-26 19:21:51,525 ] 69 root - INFO - Starting data transformation process.
+[ 2025-06-26 19:21:51,970 ] 167 root - INFO - Loan and transactions datasets loaded successfully.
+[ 2025-06-26 19:24:14,561 ] 135 root - INFO - Preprocessor object created with numerical: ['loan_amount_requested', 'loan_tenure_months', 'interest_rate_offered', 'monthly_income', 'cibil_score', 'existing_emis_monthly', 'debt_to_income_ratio', 'applicant_age', 'number_of_dependents', 'loan_affordability_ratio', 'existing_emi_to_income_ratio', 'num_transactions_30d', 'total_transaction_amount_30d', 'unique_merchants_30d', 'num_transactions_90d', 'total_transaction_amount_90d', 'unique_merchants_90d', 'num_transactions_180d', 'total_transaction_amount_180d', 'unique_merchants_180d', 'num_transactions_365d', 'total_transaction_amount_365d', 'unique_merchants_365d', 'failed_transactions_count', 'international_transactions_count'], categorical: ['loan_type', 'purpose_of_loan', 'employment_status', 'property_ownership_status', 'gender', 'loan_status', 'fraud_type'], and high cardinality: []
+[ 2025-06-26 19:24:14,810 ] 18 root - INFO - Object saved at artifacts\preprocessor.pkl
+[ 2025-06-26 19:24:14,811 ] 208 root - INFO - Processed data saved successfully at artifacts\train_processed.csv and artifacts\test_processed.csv.
+[ 2025-06-26 19:24:14,830 ] 74 root - INFO - Starting model training process.
+[ 2025-06-26 19:24:14,832 ] 51 root - INFO - Loading processed training and testing data.
+[ 2025-06-26 19:24:14,840 ] 81 root - ERROR - Error occurred during testing: Error occurred in python script: [C:\Users\Zuhayr Adams\Projects\Fraud Detection\src\components\model_trainer.py] at line number: [52] error message: [Error occurred in python script: [C:\Users\Zuhayr Adams\Projects\Fraud Detection\src\components\model_trainer.py] at line number: [43] error message: [Error loading processed data: artifacts\train_processed.csv]]

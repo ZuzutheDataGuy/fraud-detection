@@ -1,0 +1,7 @@
+[ 2025-06-26 14:25:43,760 ] 65 root - INFO - Starting data ingestion process.
+[ 2025-06-26 14:25:43,993 ] 43 root - INFO - Loan applications dataset loaded successfully.
+[ 2025-06-26 14:25:44,202 ] 45 root - INFO - Transactions dataset loaded successfully.
+[ 2025-06-26 14:25:44,824 ] 51 root - INFO - Data ingestion process completed successfully.
+[ 2025-06-26 14:25:44,839 ] 69 root - INFO - Starting data transformation process.
+[ 2025-06-26 14:25:45,305 ] 167 root - INFO - Loan and transactions datasets loaded successfully.
+[ 2025-06-26 14:30:48,775 ] 81 root - ERROR - Error occurred during testing: Error occurred in python script: [C:\Users\Zuhayr Adams\Projects\Fraud Detection\src\components\data_transformation.py] at line number: [189] error message: [Error occurred in python script: [C:\Users\Zuhayr Adams\Projects\Fraud Detection\src\components\data_transformation.py] at line number: [116] error message: [OneHotEncoder.__init__() got an unexpected keyword argument 'sparse']]

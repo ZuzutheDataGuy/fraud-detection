@@ -1,0 +1,38 @@
+[ 2025-06-26 21:25:14,930 ] 59 root - INFO - Starting data ingestion process.
+[ 2025-06-26 21:25:15,211 ] 43 root - INFO - Loan applications dataset loaded successfully.
+[ 2025-06-26 21:25:15,480 ] 45 root - INFO - Transactions dataset loaded successfully.
+[ 2025-06-26 21:25:17,280 ] 51 root - INFO - Data ingestion process completed successfully.
+[ 2025-06-26 21:25:17,309 ] 63 root - INFO - Starting data transformation process.
+[ 2025-06-26 21:25:17,309 ] 182 root - INFO - Starting data transformation process
+[ 2025-06-26 21:25:17,309 ] 122 root - INFO - Loading datasets for transformation
+[ 2025-06-26 21:25:18,361 ] 128 root - INFO - Merging datasets
+[ 2025-06-26 21:25:18,663 ] 135 root - INFO - Datasets merged successfully
+[ 2025-06-26 21:25:18,663 ] 29 root - INFO - Creating datetime features
+[ 2025-06-26 21:25:18,736 ] 36 root - INFO - Datetime features created successfully
+[ 2025-06-26 21:25:18,737 ] 44 root - INFO - Creating loan-related features
+[ 2025-06-26 21:25:18,741 ] 49 root - INFO - Loan features created successfully
+[ 2025-06-26 21:25:18,742 ] 57 root - INFO - Starting transaction feature aggregation
+[ 2025-06-26 21:27:52,543 ] 89 root - INFO - Transaction feature aggregation completed successfully
+[ 2025-06-26 21:27:52,613 ] 97 root - INFO - Starting fraud feature aggregation
+[ 2025-06-26 21:28:46,783 ] 114 root - INFO - Fraud feature aggregation completed successfully
+[ 2025-06-26 21:28:46,811 ] 202 root - INFO - Merging aggregated features
+[ 2025-06-26 21:28:46,913 ] 213 root - INFO - Preparing features and target variable
+[ 2025-06-26 21:28:46,951 ] 143 root - INFO - Creating data transformer object
+[ 2025-06-26 21:28:46,971 ] 151 root - INFO - Removed 'residential_address' from categorical features
+[ 2025-06-26 21:28:46,971 ] 153 root - INFO - Numerical features: ['loan_amount_requested', 'loan_tenure_months', 'interest_rate_offered', 'monthly_income', 'cibil_score', 'existing_emis_monthly', 'debt_to_income_ratio', 'applicant_age', 'number_of_dependents', 'loan_affordability_ratio', 'existing_emi_to_income_ratio', 'num_transactions_30d', 'total_transaction_amount_30d', 'average_transaction_amount_30d', 'unique_merchant_categories_30d', 'num_transactions_90d', 'total_transaction_amount_90d', 'average_transaction_amount_90d', 'unique_merchant_categories_90d', 'num_transactions_180d', 'total_transaction_amount_180d', 'average_transaction_amount_180d', 'unique_merchant_categories_180d', 'num_transactions_365d', 'total_transaction_amount_365d', 'average_transaction_amount_365d', 'unique_merchant_categories_365d', 'failed_transactions_count', 'international_transactions_count']
+[ 2025-06-26 21:28:46,972 ] 154 root - INFO - Categorical features: ['loan_type', 'purpose_of_loan', 'employment_status', 'property_ownership_status', 'gender']
+[ 2025-06-26 21:28:46,973 ] 163 root - INFO - Data transformer object created successfully
+[ 2025-06-26 21:28:46,974 ] 227 root - INFO - Applying transformations
+[ 2025-06-26 21:28:47,167 ] 234 root - INFO - Shape of transformed data: (50000, 53)
+[ 2025-06-26 21:28:47,168 ] 235 root - INFO - Shape of target variable: (50000,)
+[ 2025-06-26 21:28:47,168 ] 238 root - INFO - Saving preprocessing object
+[ 2025-06-26 21:28:47,175 ] 247 root - INFO - Successfully retrieved feature names from preprocessor
+[ 2025-06-26 21:28:47,176 ] 272 root - INFO - Number of feature names: 53
+[ 2025-06-26 21:28:47,176 ] 273 root - INFO - First 10 feature names: ['num__loan_amount_requested' 'num__loan_tenure_months'
+ 'num__interest_rate_offered' 'num__monthly_income' 'num__cibil_score'
+ 'num__existing_emis_monthly' 'num__debt_to_income_ratio'
+ 'num__applicant_age' 'num__number_of_dependents'
+ 'num__loan_affordability_ratio']
+[ 2025-06-26 21:28:47,178 ] 282 root - INFO - Creating transformed dataset
+[ 2025-06-26 21:28:47,180 ] 291 root - INFO - Final transformed data shape: (50000, 54)
+[ 2025-06-26 21:28:49,635 ] 299 root - INFO - Data transformation completed successfully

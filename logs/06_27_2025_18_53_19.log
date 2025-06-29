@@ -1,0 +1,40 @@
+[ 2025-06-27 18:53:24,733 ] 60 root - INFO - Starting data ingestion process.
+[ 2025-06-27 18:53:24,937 ] 44 root - INFO - Loan applications dataset loaded successfully.
+[ 2025-06-27 18:53:25,129 ] 46 root - INFO - Transactions dataset loaded successfully.
+[ 2025-06-27 18:53:25,759 ] 52 root - INFO - Data ingestion process completed successfully.
+[ 2025-06-27 18:53:25,776 ] 64 root - INFO - Starting data transformation process.
+[ 2025-06-27 18:53:25,777 ] 182 root - INFO - Starting data transformation process
+[ 2025-06-27 18:53:25,777 ] 122 root - INFO - Loading datasets for transformation
+[ 2025-06-27 18:53:26,254 ] 128 root - INFO - Merging datasets
+[ 2025-06-27 18:53:26,412 ] 135 root - INFO - Datasets merged successfully
+[ 2025-06-27 18:53:26,413 ] 29 root - INFO - Creating datetime features
+[ 2025-06-27 18:53:26,462 ] 36 root - INFO - Datetime features created successfully
+[ 2025-06-27 18:53:26,463 ] 44 root - INFO - Creating loan-related features
+[ 2025-06-27 18:53:26,465 ] 49 root - INFO - Loan features created successfully
+[ 2025-06-27 18:53:26,466 ] 57 root - INFO - Starting transaction feature aggregation
+[ 2025-06-27 18:55:07,695 ] 89 root - INFO - Transaction feature aggregation completed successfully
+[ 2025-06-27 18:55:07,749 ] 97 root - INFO - Starting fraud feature aggregation
+[ 2025-06-27 18:55:44,585 ] 114 root - INFO - Fraud feature aggregation completed successfully
+[ 2025-06-27 18:55:44,603 ] 202 root - INFO - Merging aggregated features
+[ 2025-06-27 18:55:44,677 ] 213 root - INFO - Preparing features and target variable
+[ 2025-06-27 18:55:44,710 ] 143 root - INFO - Creating data transformer object
+[ 2025-06-27 18:55:44,722 ] 151 root - INFO - Removed 'residential_address' from categorical features
+[ 2025-06-27 18:55:44,723 ] 153 root - INFO - Numerical features: ['loan_amount_requested', 'loan_tenure_months', 'interest_rate_offered', 'monthly_income', 'cibil_score', 'existing_emis_monthly', 'debt_to_income_ratio', 'applicant_age', 'number_of_dependents', 'loan_affordability_ratio', 'existing_emi_to_income_ratio', 'num_transactions_30d', 'total_transaction_amount_30d', 'average_transaction_amount_30d', 'unique_merchant_categories_30d', 'num_transactions_90d', 'total_transaction_amount_90d', 'average_transaction_amount_90d', 'unique_merchant_categories_90d', 'num_transactions_180d', 'total_transaction_amount_180d', 'average_transaction_amount_180d', 'unique_merchant_categories_180d', 'num_transactions_365d', 'total_transaction_amount_365d', 'average_transaction_amount_365d', 'unique_merchant_categories_365d', 'failed_transactions_count', 'international_transactions_count']
+[ 2025-06-27 18:55:44,723 ] 154 root - INFO - Categorical features: ['loan_type', 'purpose_of_loan', 'employment_status', 'property_ownership_status', 'gender']
+[ 2025-06-27 18:55:44,724 ] 163 root - INFO - Data transformer object created successfully
+[ 2025-06-27 18:55:44,724 ] 227 root - INFO - Applying transformations
+[ 2025-06-27 18:55:44,824 ] 234 root - INFO - Shape of transformed data: (50000, 53)
+[ 2025-06-27 18:55:44,825 ] 235 root - INFO - Shape of target variable: (50000,)
+[ 2025-06-27 18:55:44,825 ] 238 root - INFO - Saving preprocessing object
+[ 2025-06-27 18:55:44,830 ] 247 root - INFO - Successfully retrieved feature names from preprocessor
+[ 2025-06-27 18:55:44,830 ] 272 root - INFO - Number of feature names: 53
+[ 2025-06-27 18:55:44,831 ] 273 root - INFO - First 10 feature names: ['num__loan_amount_requested' 'num__loan_tenure_months'
+ 'num__interest_rate_offered' 'num__monthly_income' 'num__cibil_score'
+ 'num__existing_emis_monthly' 'num__debt_to_income_ratio'
+ 'num__applicant_age' 'num__number_of_dependents'
+ 'num__loan_affordability_ratio']
+[ 2025-06-27 18:55:44,832 ] 282 root - INFO - Creating transformed dataset
+[ 2025-06-27 18:55:44,833 ] 291 root - INFO - Final transformed data shape: (50000, 54)
+[ 2025-06-27 18:55:46,518 ] 299 root - INFO - Data transformation completed successfully
+[ 2025-06-27 18:55:46,546 ] 68 root - INFO - Model training process initiated.
+[ 2025-06-27 18:55:46,546 ] 73 root - ERROR - Error occurred during data transformation: ModelTrainer.initiate_model_trainer() missing 1 required positional argument: 'y'

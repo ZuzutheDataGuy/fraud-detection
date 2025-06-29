@@ -1,0 +1,27 @@
+[ 2025-06-26 20:05:33,960 ] 59 root - INFO - Starting data ingestion process.
+[ 2025-06-26 20:05:34,124 ] 43 root - INFO - Loan applications dataset loaded successfully.
+[ 2025-06-26 20:05:34,342 ] 45 root - INFO - Transactions dataset loaded successfully.
+[ 2025-06-26 20:05:34,970 ] 51 root - INFO - Data ingestion process completed successfully.
+[ 2025-06-26 20:05:34,978 ] 63 root - INFO - Starting data transformation process.
+[ 2025-06-26 20:05:34,978 ] 178 root - INFO - Starting data transformation process
+[ 2025-06-26 20:05:34,979 ] 123 root - INFO - Loading datasets for transformation
+[ 2025-06-26 20:05:35,375 ] 129 root - INFO - Merging datasets
+[ 2025-06-26 20:05:35,498 ] 136 root - INFO - Datasets merged successfully
+[ 2025-06-26 20:05:35,499 ] 30 root - INFO - Creating datetime features
+[ 2025-06-26 20:05:35,521 ] 37 root - INFO - Datetime features created successfully
+[ 2025-06-26 20:05:35,522 ] 45 root - INFO - Creating loan-related features
+[ 2025-06-26 20:05:35,523 ] 50 root - INFO - Loan features created successfully
+[ 2025-06-26 20:05:35,523 ] 58 root - INFO - Starting transaction feature aggregation
+[ 2025-06-26 20:07:14,342 ] 90 root - INFO - Transaction feature aggregation completed successfully
+[ 2025-06-26 20:07:14,401 ] 98 root - INFO - Starting fraud feature aggregation
+[ 2025-06-26 20:07:49,594 ] 115 root - INFO - Fraud feature aggregation completed successfully
+[ 2025-06-26 20:07:49,613 ] 198 root - INFO - Merging aggregated features
+[ 2025-06-26 20:07:49,688 ] 209 root - INFO - Preparing features and target variable
+[ 2025-06-26 20:07:49,719 ] 144 root - INFO - Creating data transformer object
+[ 2025-06-26 20:07:49,730 ] 149 root - INFO - Numerical features: ['loan_amount_requested', 'loan_tenure_months', 'interest_rate_offered', 'monthly_income', 'cibil_score', 'existing_emis_monthly', 'debt_to_income_ratio', 'applicant_age', 'number_of_dependents', 'loan_affordability_ratio', 'existing_emi_to_income_ratio', 'num_transactions_30d', 'total_transaction_amount_30d', 'average_transaction_amount_30d', 'unique_merchant_categories_30d', 'num_transactions_90d', 'total_transaction_amount_90d', 'average_transaction_amount_90d', 'unique_merchant_categories_90d', 'num_transactions_180d', 'total_transaction_amount_180d', 'average_transaction_amount_180d', 'unique_merchant_categories_180d', 'num_transactions_365d', 'total_transaction_amount_365d', 'average_transaction_amount_365d', 'unique_merchant_categories_365d', 'failed_transactions_count', 'international_transactions_count']
+[ 2025-06-26 20:07:49,731 ] 150 root - INFO - Categorical features: ['loan_type', 'purpose_of_loan', 'employment_status', 'property_ownership_status', 'residential_address', 'gender']
+[ 2025-06-26 20:07:49,731 ] 159 root - INFO - Data transformer object created successfully
+[ 2025-06-26 20:07:49,731 ] 223 root - INFO - Applying transformations
+[ 2025-06-26 20:07:49,962 ] 240 root - INFO - Saving preprocessing object
+[ 2025-06-26 20:07:50,958 ] 269 root - ERROR - An error occurred during data transformation
+[ 2025-06-26 20:07:50,959 ] 68 root - ERROR - Error occurred during data transformation: Error occurred in python script: [C:\Users\Zuhayr Adams\Projects\Fraud Detection\src\components\data_transformation.py] at line number: [253] error message: [Shape of passed values is (50000, 1), indices imply (50000, 18367)]

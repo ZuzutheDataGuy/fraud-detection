@@ -1,0 +1,16 @@
+[ 2025-06-26 20:10:57,976 ] 59 root - INFO - Starting data ingestion process.
+[ 2025-06-26 20:10:58,202 ] 43 root - INFO - Loan applications dataset loaded successfully.
+[ 2025-06-26 20:10:58,387 ] 45 root - INFO - Transactions dataset loaded successfully.
+[ 2025-06-26 20:10:58,976 ] 51 root - INFO - Data ingestion process completed successfully.
+[ 2025-06-26 20:10:58,985 ] 63 root - INFO - Starting data transformation process.
+[ 2025-06-26 20:10:58,986 ] 175 root - INFO - Starting data transformation process
+[ 2025-06-26 20:10:58,986 ] 122 root - INFO - Loading datasets for transformation
+[ 2025-06-26 20:10:59,354 ] 126 root - INFO - Merging datasets
+[ 2025-06-26 20:10:59,444 ] 133 root - INFO - Datasets merged successfully
+[ 2025-06-26 20:10:59,445 ] 29 root - INFO - Creating datetime features
+[ 2025-06-26 20:10:59,475 ] 36 root - INFO - Datetime features created successfully
+[ 2025-06-26 20:10:59,475 ] 44 root - INFO - Creating loan-related features
+[ 2025-06-26 20:10:59,478 ] 49 root - INFO - Loan features created successfully
+[ 2025-06-26 20:10:59,478 ] 57 root - INFO - Starting transaction feature aggregation
+[ 2025-06-26 20:10:59,639 ] 268 root - ERROR - An error occurred during data transformation
+[ 2025-06-26 20:10:59,639 ] 68 root - ERROR - Error occurred during data transformation: Error occurred in python script: [C:\Users\Zuhayr Adams\Projects\Fraud Detection\src\components\data_transformation.py] at line number: [189] error message: [Error occurred in python script: [C:\Users\Zuhayr Adams\Projects\Fraud Detection\src\components\data_transformation.py] at line number: [76] error message: [unsupported operand type(s) for -: 'str' and 'datetime.timedelta']]
